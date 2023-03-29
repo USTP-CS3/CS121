@@ -3,6 +3,39 @@
     Banks lend money to each other. In tough economic times, if a bank goes bankrupt, it may
     not be able to pay bck the lend. A bank's total asset is its curent balance plus its lends
     to other banks.
+
+    Limit = 201;
+
+           0       1       2       3       4
+    b0 |  25   | 100.5 |       |       | 320.5 |   = 446
+    b1 |       |  125  |  40   |   85  |       |   = 250
+    b2 |  125  |       |  175  |   75  |       |   = 375
+    b3 |  125  |       |       |   75  |       |   = 200  < unsafe
+    b4 |       |       |  125  |       |  181  |   = 306  
+
+
+    // b3 unsafe affects its link
+
+           0       1       2       3       4
+    b0 |  25   | 100.5 |       |       | 320.5 |   = 446
+    b1 |       |  125  |  40   |   -   |       |   = 165  < unsafe
+    b2 |  125  |       |  175  |   -   |       |   = 300
+    b3 |  125  |       |       |   75  |       |   = 200  < unsafe
+    b4 |       |       |  125  |       |  181  |   = 306  
+
+
+    // b1 unsafe affects its link
+
+           0       1       2       3       4
+    b0 |  25   |   -   |       |       | 320.5 |   = 345.5
+    b1 |       |  125  |  40   |   -   |       |   = 165  < unsafe
+    b2 |  125  |       |  175  |   -   |       |   = 300
+    b3 |  125  |       |       |   75  |       |   = 200  < unsafe
+    b4 |       |       |  125  |       |  181  |   = 306  
+
+
+    // since no new unsafe, therefore
+    // bank 3 and 1 are unsafe
 */
 #include <iostream>
 #include <iomanip>
